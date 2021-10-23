@@ -52,7 +52,23 @@ var questions = [
     }
 ]
 
+// global variables 
+var timerEl = document.getElementById('countdown');
 
 
-
-
+// countdown function 
+function countdown(){
+    //set countdown inital time
+    var timeLeft = 120;
+    // call function to be executed every 1000 miliseconds 
+    var timeInterval = setInterval(function(){
+        timerEl.textContent = timeLeft
+        timeLeft--; // timeleft = timeleft - 1 
+        if(timeLeft <= 0){
+            clearInterval(timeInterval);
+            timerEl.textContent = "";
+        }
+    }, 1000);
+}
+   
+countdown();
