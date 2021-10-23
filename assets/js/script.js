@@ -54,9 +54,9 @@ var questions = [
 
 // global variables 
 var timerEl = document.getElementById('countdown');
+var score = [];
 
-
-// countdown function 
+// function to manage countdown timers
 function countdown(){
     //set countdown inital time
     var timeLeft = 120;
@@ -69,6 +69,17 @@ function countdown(){
             timerEl.textContent = "";
         }
     }, 1000);
-}
-   
-countdown();
+};
+
+// function to remove quiz intro content 
+function removeIntro(){
+    var clearIntro = document.getElementById("intro");
+    if(clearIntro.style.display === "none"){
+        clearIntro.style.display = "block";
+    } else {
+        clearIntro.style.display = "none";
+    }
+};
+
+// start quiz
+
