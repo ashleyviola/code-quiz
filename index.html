@@ -14,7 +14,7 @@
             <button type="button" class="view-highscore">View High Scores</button>
         </div>
         <div>
-            <p id="timer"></p>
+            <p>Timer: <span id="timer">0</span></p>
         </div>
     </header>
     <main class="container" id="container">
@@ -31,12 +31,8 @@
         <!-- quiz -->
         <section class="quiz">
             <h1 id="question"></h1>
-            <div class="answers" id="answers">
-                <button id="0"></button>
-                <button id="1"></button>
-                <button id="2"></button>
-                <button id="3"></button>
-            </div>
+            <div id="choices"></div>
+            <div id="answer"></div>
         </section>
 
         <!-- final score -->

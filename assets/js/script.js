@@ -58,7 +58,8 @@ let startQuizBtnEl = document.querySelector("#intro-btn");
 // quiz page elements
 let quizEl = document.querySelector(".quiz");
 let questionEl = document.querySelector("#question");
-let answerEl = document.querySelector("#answers");
+let choicesEl = document.querySelector("#choices")
+let answerEl = document.querySelector("#answer");
 
 // final score page elements
 let inputScoreEl = document.querySelector("#final-score");
@@ -96,7 +97,31 @@ function startTimer(){
         timeLeft--;
         if(timeLeft <= 0){
             clearInterval(timeInterval);
-            timerEl.textContent ="";
+            timerEl.textContent ="Time Up!";
         } 
     }, 1000);
+}
+
+
+// create question
+function populateQuestion(){
+
+    //show the question
+    questionEl.textContent = questions[currentQ].title;
+
+    //show answer choices
+    for(let i = 0; i < questions[currentQ].choices.length; i++){
+        var choiceBtnEl = document.createElement("button");
+        choiceBtnEl.textContent = questions[currentQ].choices[i];
+        answerEl.appendChild(choiceBtnEl);
+        
+        //check answer 
+        choiceBtnEl.addEventListener('click', function(){
+            if(questions[currentQ].choices[i] === questions[currentQ].answer){
+                console.log("this is the right answer");
+            } else{
+                console.log("this is the wrong answer");
+            }
+        });
+    } 
 }
