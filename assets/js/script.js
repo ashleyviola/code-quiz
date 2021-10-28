@@ -73,4 +73,30 @@ let goBackBtn = document.querySelector("#go-back");
 
 // universal variables 
 let viewHighScoresBtnEl = document.querySelector(".view-high-score")
-let tiemrEl = document.querySelector("#timer");
+let timerEl = document.querySelector("#timer");
+let secondsElapsed = 0;
+let currentQ = 0;
+
+// acceptance critera 
+// when i click a start button 
+// then a timer starts and i am presented with a question
+// when i answer a question 
+// then i am presented with another question
+// when i answer a question incorrectly
+// then time is subtracted from the clock 
+// all questions are answered or the timer clock reaches 0
+// then the game is over 
+// when the gmae is over i can save my initials and score 
+
+// timer 
+function startTimer(){
+    let timeLeft = 120;
+    let timeInterval = setInterval(function(){
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+        if(timeLeft <= 0){
+            clearInterval(timeInterval);
+            timerEl.textContent ="";
+        } 
+    }, 1000);
+}
