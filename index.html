@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- header section high score & timer  -->
     <header class="header"> 
         <div>
             <button type="button" class="highscores">View High Scores</button>
@@ -18,7 +19,9 @@
             <p id="countdown">120</p>
         </div>
     </header>
-    <main class="quiz" id="quiz">
+    <main class="container" id="container">
+
+        <!-- introduction -->
         <section class="intro" id="intro">
             <h1>Coding Quiz Challenge</h1>
             <p>Are you ready to put your coding knowledge to the test? 
@@ -26,9 +29,34 @@
                 CSS and JavaScript knowledge.</p>
             <button id="intro-btn" >Start Quiz!</button>
         </section>
-        <section class="questions"></section>
+
+        <!-- quiz -->
+        <section class="quiz">
+            <h1 id="question"></h1>
+            <div class="answers" id="answers">
+                <button id="0"></button>
+                <button id="1"></button>
+                <button id="2"></button>
+                <button id="3"></button>
+            </div>
+        </section>
+
+        <!-- final score -->
         <section class="final-score"></section>
+            <h1>YAY! You did it!</h1>
+            <p>Your Final Score <span id="score"></span></p>
+            <p>Enter Initials: <input type = "text" id="initials"></p>
+            <button id="submitInitials">Submit</button>
         <section class="high-score-list"></section>
+
+        <!-- view high scores -->
+        <section id="highScores">
+            <h1>Highscores</h1>
+            <div id="scores"></div>
+            <button id="go-back">Go Back</button>
+            <button id="clearScores"> Clear Scores</button>
+        </section>
+
     </main>
     <script src="./assets/js/script.js"></script>
 </body>

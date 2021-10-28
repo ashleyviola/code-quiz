@@ -51,60 +51,26 @@ var questions = [
         answer: "Multiple Values"
     }
 ]
-// global variables 
-var timerEl = document.getElementById("countdown");
-var score = 0;
-var questionNumber = 0
-var quizContainer = document.querySelector("#quiz")
-var questionContainer = document.querySelector("#questions")
+// welcome page elements
+let introEl = document.querySelector("#intro");
+let startQuizBtnEl = document.querySelector("#intro-btn");
 
+// quiz page elements
+let quizEl = document.querySelector(".quiz");
+let questionEl = document.querySelector("#question");
+let answerEl = document.querySelector("#answers");
 
-// function to manage countdown timers
-function countdown(){
-    //set countdown inital time
-    var timeLeft = 120;
-    // call function to be executed every 1000 miliseconds 
-    var timeInterval = setInterval(function(){
-        timerEl.textContent = "⏱️ Time: " + timeLeft;
-        timeLeft--; // timeleft = timeleft - 1 
-        if(timeLeft <= 0){
-            clearInterval(timeInterval);
-            timerEl.textContent = "";
-        }
-    }, 1000);
-};
+// final score page elements
+let inputScoreEl = document.querySelector("#final-score");
+let userScore = document.querySelector("#score");
+let initialsEl = document.querySelector("#initials");
+let submitInitialsBtnEl = document.querySelector("#submitinitials");
 
-// function to remove quiz intro content 
-function removeIntro(){
-    var clearIntro = document.getElementById("intro");
-    if(clearIntro.style.display === "none"){
-        clearIntro.style.display = "block";
-    } else {
-        clearIntro.style.display = "none";
-    }
-};
+// view high score page elements
+let highScoresEl = document.querySelector("#highScores");
+let scoresEl = document.querySelector("#scores");
+let goBackBtn = document.querySelector("#go-back");
 
-
-//create question elements 
-var createQuestionEl = function (){
-
-    var questionContainerEl = document.createElement("div");
-    questionContainerEl.className = "question-container"
-
-
-    for (i=0; i < questions.length; i++){
-
-        var questionTitleEl = document.createElement("h2");
-        questionTitleEl.innerText = questions[i].title;
-        questionTitleEl.setAttribute("question-number", questionNumber);
-        questionContainerEl.appendChild(questionTitleEl);
-
-    }
-
-    // questions.id = questionNumber
-
-    // increase question number for each question to continue quiz  
-    questionNumber++;
-
-    
-};
+// universal variables 
+let viewHighScoresBtnEl = document.querySelector(".view-high-score")
+let tiemrEl = document.querySelector("#timer");
