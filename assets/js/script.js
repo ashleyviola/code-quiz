@@ -51,10 +51,13 @@ var questions = [
         answer: "Multiple Values"
     }
 ]
-
 // global variables 
-var timerEl = document.getElementById('countdown');
-var score = [];
+var timerEl = document.getElementById("countdown");
+var score = 0;
+var questionNumber = 0
+var quizContainer = document.querySelector("#quiz")
+var questionContainer = document.querySelector("#questions")
+
 
 // function to manage countdown timers
 function countdown(){
@@ -62,7 +65,7 @@ function countdown(){
     var timeLeft = 120;
     // call function to be executed every 1000 miliseconds 
     var timeInterval = setInterval(function(){
-        timerEl.textContent = timeLeft
+        timerEl.textContent = "⏱️ Time: " + timeLeft;
         timeLeft--; // timeleft = timeleft - 1 
         if(timeLeft <= 0){
             clearInterval(timeInterval);
@@ -81,5 +84,27 @@ function removeIntro(){
     }
 };
 
-// start quiz
 
+//create question elements 
+var createQuestionEl = function (){
+
+    var questionContainerEl = document.createElement("div");
+    questionContainerEl.className = "question-container"
+
+
+    for (i=0; i < questions.length; i++){
+
+        var questionTitleEl = document.createElement("h2");
+        questionTitleEl.innerText = questions[i].title;
+        questionTitleEl.setAttribute("question-number", questionNumber);
+        questionContainerEl.appendChild(questionTitleEl);
+
+    }
+
+    // questions.id = questionNumber
+
+    // increase question number for each question to continue quiz  
+    questionNumber++;
+
+    
+};
