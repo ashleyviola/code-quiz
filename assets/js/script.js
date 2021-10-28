@@ -60,6 +60,7 @@ let quizEl = document.querySelector(".quiz");
 let questionEl = document.querySelector("#question");
 let choicesEl = document.querySelector("#choices")
 let answerEl = document.querySelector("#answer");
+let gradingEl = document.querySelector("#grading")
 
 // final score page elements
 let inputScoreEl = document.querySelector("#final-score");
@@ -77,6 +78,7 @@ let viewHighScoresBtnEl = document.querySelector(".view-high-score")
 let timerEl = document.querySelector("#timer");
 let secondsElapsed = 0;
 let currentQ = 0;
+let score = 0;
 
 // acceptance critera 
 // when i click a start button 
@@ -125,3 +127,22 @@ function populateQuestion(){
         });
     } 
 }
+// function for correct answer 
+function correctAnswer(){
+    score++;
+    currentQ++;
+    gradingEl.textContent = "Correct Answer!";
+}
+   
+// function for wrong answer 
+function wrongAnswer(){
+    timeLeft = timeLeft - 10;
+    currentQ++;
+    gradingEl.textContent = "Wrong Answer!"
+}
+
+// events 
+// start quiz
+// save score
+// go back
+// show high scores
