@@ -79,6 +79,7 @@ let timerEl = document.querySelector("#timer");
 let secondsElapsed = 0;
 let currentQ = 0;
 let score = 0;
+let timeLeft = 120;
 
 // acceptance critera 
 // when i click a start button 
@@ -91,9 +92,13 @@ let score = 0;
 // then the game is over 
 // when the gmae is over i can save my initials and score 
 
+// start quiz function 
+function startQuiz() {
+    startTimer();
+    populateQuestion();
+}
 // timer 
 function startTimer(){
-    let timeLeft = 120;
     let timeInterval = setInterval(function(){
         timerEl.textContent = timeLeft;
         timeLeft--;
@@ -103,7 +108,6 @@ function startTimer(){
         } 
     }, 1000);
 }
-
 
 // create question
 function populateQuestion(){
@@ -120,9 +124,9 @@ function populateQuestion(){
         //check answer 
         choiceBtnEl.addEventListener('click', function(){
             if(questions[currentQ].choices[i] === questions[currentQ].answer){
-                console.log("this is the right answer");
+                correctAnswer();
             } else{
-                console.log("this is the wrong answer");
+                wrongAnswer();
             }
         });
     } 
@@ -132,6 +136,9 @@ function correctAnswer(){
     score++;
     currentQ++;
     gradingEl.textContent = "Correct Answer!";
+    setTimeout(clearPage, 2000);
+    setTimeout(populateQuestion, 2000);
+    // add function for next question
 }
    
 // function for wrong answer 
@@ -139,8 +146,17 @@ function wrongAnswer(){
     timeLeft = timeLeft - 10;
     currentQ++;
     gradingEl.textContent = "Wrong Answer!"
+    setTimeout(clearPage, 2000);
+    setTimeout(populateQuestion, 2000);
 }
 
+// clear page
+function clearPage() {
+    questionEl.textContent = "";
+    choicesEl.textContent = "";
+    answerEl.textContent = "";
+    gradingEl.textContent = "";
+}
 // events 
 // start quiz
 // save score
