@@ -28,7 +28,7 @@ var questions = [
     {
         title: "CSS...",
         choices: ["Specifies the layout of web pages.", "Defines the content of the web pages","Programs the behavior of web pages","All of teh above."],
-        answer: "Specifies the layout of the web pages."
+        answer: "Specifies the layout of web pages."
     },
     {
         title: "CSS selectors can be...",
@@ -43,7 +43,7 @@ var questions = [
     {
         title: "Which of the following is not a way to delcare a JavaScript Variable?",
         choices: ["var","let", "const","declare"],
-        answer: "delcare"
+        answer: "declare"
     },
     {
         title: "JavaScript arrays store...",
@@ -53,7 +53,7 @@ var questions = [
 ]
 // welcome page elements
 let introEl = document.querySelector("#intro");
-let startQuizBtnEl = document.querySelector("#intro-btn");
+let startQuizButton = document.querySelector("#intro-btn");
 
 // quiz page elements
 let quizEl = document.querySelector(".quiz");
@@ -63,10 +63,9 @@ let answerEl = document.querySelector("#answer");
 let gradingEl = document.querySelector("#grading")
 
 // final score page elements
-let inputScoreEl = document.querySelector("#final-score");
-let userScore = document.querySelector("#score");
-let initialsEl = document.querySelector("#initials");
-let submitInitialsBtnEl = document.querySelector("#submitinitials");
+let playerScoreEl = document.querySelector("#player-score");
+let initialsInput = document.querySelector("#player-initials");
+let submitScoreButton = document.querySelector("#submit-score");
 
 // view high score page elements
 let highScoresEl = document.querySelector("#highScores");
@@ -105,8 +104,18 @@ function startTimer(){
         if(timeLeft <= 0){
             clearInterval(timeInterval);
             timerEl.textContent ="Time Up!";
+            endQuiz();
         } 
     }, 1000);
+}
+
+// hide intro content 
+function hideIntro(){
+    introEl.style.display = "none";
+}
+// show intro content 
+function showIntro(){
+    introEl.style.display = "block";
 }
 
 // create question
@@ -136,18 +145,27 @@ function correctAnswer(){
     score++;
     currentQ++;
     gradingEl.textContent = "Correct Answer!";
-    setTimeout(clearPage, 2000);
-    setTimeout(populateQuestion, 2000);
+    setTimeout(clearPage, 1500);
+    setTimeout(nextQuestion, 1500);
     // add function for next question
 }
-   
+
 // function for wrong answer 
 function wrongAnswer(){
     timeLeft = timeLeft - 10;
     currentQ++;
-    gradingEl.textContent = "Wrong Answer!"
-    setTimeout(clearPage, 2000);
-    setTimeout(populateQuestion, 2000);
+    gradingEl.textContent = "Wrong Answer!";
+    setTimeout(clearPage, 1500);
+    setTimeout(nextQuestion, 1500);
+}
+
+// next question
+function nextQuestion(){
+    if (currentQ < questions.length){
+        populateQuestion();
+    } else {
+        endQuiz();
+    }
 }
 
 // clear page
@@ -157,8 +175,37 @@ function clearPage() {
     answerEl.textContent = "";
     gradingEl.textContent = "";
 }
+
+//end quiz - view score 
+function endQuiz(){
+    clearPage();
+    playerScoreEl.textContent = score;
+}
+
+// submit score 
+
+
+// let playerScoreEl = document.querySelector("#player-score");
+// let initialsInput = document.querySelector("#player-initials");
+
 // events 
+
+window.onload = function(){
+    showIntro
+
+}
 // start quiz
+startQuizButton.addEventListener("click", startQuiz());
 // save score
+submitScoreButton.addEventListener("click", function(event){
+    event.preventDefault();
+
+    var userHighScore = {
+        initials: initialsInput.value.trim(),
+        score: score
+    };
+
+    localStorage.setItem("userHighScore", JSON.stringify(userHighScore));
+});
 // go back
 // show high scores
