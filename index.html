@@ -5,13 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Code Quiz</title>
 </head>
 <body>
     <!-- header section high score & timer  -->
     <header class="header"> 
         <div>
-            <button type="button" class="view-highscore">View High Scores</button>
+            <button type="button" id="view-high-scores">View High Scores</button>
         </div>
         <div>
             <p>Timer: <span id="timer">0</span></p>
@@ -38,9 +41,8 @@
 
         <!-- final score -->
         <section class="final-score">
-           <h2>Congrats! You completed the quiz.</h2>
-           <h3>Your Final Score: <span id="player-score"></span></h3>
-           <h3>Enter Your Initials <input id="player-initials"> </h3>
+           <h2>Your Final Score: <span id="player-score"></span></h2>
+           <h3>Enter Your Initials <input type="text" id="player-initials"></h3>
            <button id="submit-score">Save Your High Score</button>
         </section>
 
@@ -48,7 +50,7 @@
        
         <section id="highScores">
             <h1>Highscores</h1>
-            <div id="scores"></div>
+            <p id="scores"></p>
             <button id="go-back">Go Back</button>
         </section>
 

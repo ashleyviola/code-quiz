@@ -27,7 +27,7 @@ var questions = [
     },
     {
         title: "CSS...",
-        choices: ["Specifies the layout of web pages.", "Defines the content of the web pages","Programs the behavior of web pages","All of teh above."],
+        choices: ["Specifies the layout of web pages.", "Defines the content of the web pages","Programs the behavior of web pages","All of the above."],
         answer: "Specifies the layout of web pages."
     },
     {
@@ -63,70 +63,58 @@ let answerEl = document.querySelector("#answer");
 let gradingEl = document.querySelector("#grading")
 
 // final score page elements
+let finalScoreEl = document.querySelector(".final-score");
 let playerScoreEl = document.querySelector("#player-score");
 let initialsInput = document.querySelector("#player-initials");
 let submitScoreButton = document.querySelector("#submit-score");
-
+let viewHighScoreButton = document.querySelector("#view-high-scores");
 // view high score page elements
 let highScoresEl = document.querySelector("#highScores");
 let scoresEl = document.querySelector("#scores");
 let goBackBtn = document.querySelector("#go-back");
-
+let playAgainBtn = document.querySelector("#play-again");
 // universal variables 
 let viewHighScoresBtnEl = document.querySelector(".view-high-score")
 let timerEl = document.querySelector("#timer");
 let secondsElapsed = 0;
 let currentQ = 0;
 let score = 0;
-let timeLeft = 120;
+let timeLeft = 90;
 
-// acceptance critera 
-// when i click a start button 
-// then a timer starts and i am presented with a question
-// when i answer a question 
-// then i am presented with another question
-// when i answer a question incorrectly
-// then time is subtracted from the clock 
-// all questions are answered or the timer clock reaches 0
-// then the game is over 
-// when the gmae is over i can save my initials and score 
-
-// start quiz function 
+// start quiz function
 function startQuiz() {
+    hideIntro();
     startTimer();
     populateQuestion();
 }
+
 // timer 
 function startTimer(){
-    let timeInterval = setInterval(function(){
-        timerEl.textContent = timeLeft;
-        timeLeft--;
-        if(timeLeft <= 0){
-            clearInterval(timeInterval);
-            timerEl.textContent ="Time Up!";
-            endQuiz();
-        } 
+timeInterval = setInterval(function(){
+    timerEl.textContent = timeLeft;
+    timeLeft--;
+    if(timeLeft <= 0){
+        clearInterval(timeInterval);
+        timerEl.textContent = "Times Up!";
+        endQuiz();
+    } else if (timeLeft > 0 && currentQ >= questions.length){
+        clearInterval(timeInterval);
+        timerEl.textContent = "Game Over!";
+        endQuiz();
+    } 
     }, 1000);
-}
-
-// hide intro content 
-function hideIntro(){
-    introEl.style.display = "none";
-}
-// show intro content 
-function showIntro(){
-    introEl.style.display = "block";
 }
 
 // create question
 function populateQuestion(){
-
+    showQuestions();
     //show the question
     questionEl.textContent = questions[currentQ].title;
 
     //show answer choices
     for(let i = 0; i < questions[currentQ].choices.length; i++){
         var choiceBtnEl = document.createElement("button");
+        choiceBtnEl.className = "choice-btn";
         choiceBtnEl.textContent = questions[currentQ].choices[i];
         answerEl.appendChild(choiceBtnEl);
         
@@ -145,20 +133,18 @@ function correctAnswer(){
     score++;
     currentQ++;
     gradingEl.textContent = "Correct Answer!";
-    setTimeout(clearPage, 1500);
-    setTimeout(nextQuestion, 1500);
+    setTimeout(clearPage, 1000);
+    setTimeout(nextQuestion, 1000);
     // add function for next question
 }
-
 // function for wrong answer 
 function wrongAnswer(){
     timeLeft = timeLeft - 10;
     currentQ++;
     gradingEl.textContent = "Wrong Answer!";
-    setTimeout(clearPage, 1500);
-    setTimeout(nextQuestion, 1500);
+    setTimeout(clearPage, 1000);
+    setTimeout(nextQuestion, 1000);
 }
-
 // next question
 function nextQuestion(){
     if (currentQ < questions.length){
@@ -167,7 +153,6 @@ function nextQuestion(){
         endQuiz();
     }
 }
-
 // clear page
 function clearPage() {
     questionEl.textContent = "";
@@ -178,34 +163,88 @@ function clearPage() {
 
 //end quiz - view score 
 function endQuiz(){
-    clearPage();
+    if(timeLeft > 0){
+        clearPage();
+        showFinalScore();
+        //clearInterval(timeInterval);
+    }
     playerScoreEl.textContent = score;
 }
 
-// submit score 
-
-
-// let playerScoreEl = document.querySelector("#player-score");
-// let initialsInput = document.querySelector("#player-initials");
-
-// events 
-
-window.onload = function(){
-    showIntro
-
+// show high scores 
+function highScorePage(){
+    clearPage();
+    hideIntro();
+    hideQuestions();
+    hideFinalScore();
+    showHighScore();
 }
-// start quiz
-startQuizButton.addEventListener("click", startQuiz());
-// save score
-submitScoreButton.addEventListener("click", function(event){
-    event.preventDefault();
 
-    var userHighScore = {
-        initials: initialsInput.value.trim(),
-        score: score
+submitScoreButton.addEventListener("click", function(){
+    var userInfo = {
+        initials: initialsInput.value,
+        quizScore: score
     };
 
-    localStorage.setItem("userHighScore", JSON.stringify(userHighScore));
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        alert("Your score has been saved.");
 });
+
+
+// events 
+//initial load setup
+window.onload = function(){
+    hideFinalScore();
+    hideHighScore();
+    hideQuestions();
+}
+// start quiz
+startQuizButton.addEventListener("click", function(){
+    startQuiz();
+});
+
 // go back
+goBackBtn.addEventListener("click", function(){
+    showIntro();
+    hideHighScore();
+    hideFinalScore();
+})
 // show high scores
+viewHighScoreButton.addEventListener("click",function(){
+    highScorePage();
+    var allScores = JSON.parse(localStorage.getItem("userInfo"));
+    document.getElementById("scores").innerHTML = allScores.initials + " - " + allScores.quizScore;
+
+});
+
+// hide questions 
+function hideQuestions(){
+    quizEl.style.display = "none"
+}
+// show questions
+function showQuestions(){
+    quizEl.style.display = "block"
+}
+// hide final score elements 
+function hideFinalScore(){
+    finalScoreEl.style.display = "none";
+}
+// show final score elements
+function showFinalScore(){
+    finalScoreEl.style.display = "block";
+}
+// hide high scores 
+function hideHighScore(){
+    highScoresEl.style.display = "none";
+}
+function showHighScore(){
+    highScoresEl.style.display = "block";
+}
+// hide intro content 
+function hideIntro(){
+    introEl.style.display = "none";
+}
+// show intro content 
+function showIntro(){
+    introEl.style.display = "block";
+}
